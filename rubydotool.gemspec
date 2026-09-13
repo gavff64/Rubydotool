@@ -9,6 +9,6 @@ Gem::Specification.new do |spec|
   spec.homepage = "https://github.com/gavff64/rubydotool"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 3.1"
-  spec.files = Dir["lib/**/*.rb", "README.md", "LICENSE"]
+  spec.files = Dir["lib/**/*", "README.md", "LICENSE"]
   spec.require_paths = ["lib"]
 end

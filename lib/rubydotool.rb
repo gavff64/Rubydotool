@@ -1,7 +1,10 @@
+require "json"
 require_relative "rubydotool/version"
 
 module Rubydotool
   SOCKET = "/tmp/rubydotool-#{Process.pid}.sock"
+  KEYCODES_FILE = File.join(__dir__, "rubydotool", "keycodes.json")
+  KEYCODES = JSON.parse(File.read(KEYCODES_FILE))
 
   @pid = nil
 
@@ -65,11 +68,13 @@ module Rubydotool
   def self.key(*keycodes)
     events = []
 
-    keycodes.each do |keycode|
+    keycodes.each do |key|
+      keycode = find_keycode(key)
       events << "#{keycode}:1"
     end
 
-    keycodes.reverse.each do |keycode|
+    keycodes.reverse.each do |key|
+      keycode = find_keycode(key)
       events << "#{keycode}:0"
     end
 
@@ -94,6 +99,20 @@ module Rubydotool
 
   def self.move_to(x, y)
     run("mousemove", "--absolute", x, y)
+  end
+
+  def self.find_keycode(key)
+    if key.is_a?(Integer)
+      return key
+    end
+
+    keycode = KEYCODES[key.to_s]
+
+    if keycode.nil?
+      raise "unknown key: #{key}"
+    end
+
+    keycode
   end
 end
 
