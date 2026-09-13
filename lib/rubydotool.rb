@@ -16,7 +16,7 @@ module Rubydotool
       err: File::NULL
     )
 
-    sleep 0.5
+    sleep 2
   end
 
   def self.stop
@@ -44,7 +44,18 @@ module Rubydotool
       text_arguments << argument.to_s
     end
 
-    system(environment, "ydotool", *text_arguments)
+    worked = system(
+      environment,
+      "ydotool",
+      *text_arguments,
+      out: File::NULL
+    )
+
+    sleep 0.1
+
+    if !worked
+      raise "ydotool command failed"
+    end
   end
 
   def self.type(text)
