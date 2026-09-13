@@ -2,6 +2,10 @@
 
 A small Ruby wrapper for `ydotool`.
 
+```bash
+gem install rubydotool
+```
+
 Install `ydotool` with your system package manager, then add the gem:
 
 ```ruby
