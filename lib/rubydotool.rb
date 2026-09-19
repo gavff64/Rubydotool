@@ -25,6 +25,7 @@ module Rubydotool
   def self.stop
     return unless @pid
 
+    sleep 0.1
     Process.kill("TERM", @pid)
     Process.wait(@pid)
     @pid = nil
@@ -53,8 +54,6 @@ module Rubydotool
       *text_arguments,
       out: File::NULL
     )
-
-    sleep 0.1
 
     if !worked
       raise "ydotool command failed"
